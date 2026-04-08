@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VivahBandhan — मराठी विवाह सेवा</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&family=Noto+Sans+Devanagari:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #E8751A;
+    --saffron-light: #F5A055;
+    --saffron-pale: #FEF0E6;
+    --gold: #C9922A;
+    --gold-light: #E8B84B;
+    --gold-pale: #FDF6E3;
+    --maroon: #8B1A1A;
+    --maroon-light: #C0392B;
+    --cream: #FDF8F2;
+    --cream-2: #F9F1E7;
+    --leaf-green: #4A6741;
+    --leaf-light: #6B9461;
+    --leaf-pale: #EEF5EC;
+    --text-dark: #2C1810;
+    --text-mid: #5C3D2E;
+    --text-soft: #8B6B5A;
+    --border: rgba(201,146,42,0.2);
+    --border-strong: rgba(201,146,42,0.4);
+    --shadow: 0 8px 40px rgba(139,26,26,0.08);
+    --shadow-hover: 0 16px 60px rgba(139,26,26,0.14);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ===== BANANA LEAF BACKGROUND ===== */
+  .leaf-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .leaf-bg svg {
+    position: absolute;
+    opacity: 0.06;
+  }
+  .leaf-bg .l1 { top: -60px; left: -80px; transform: rotate(-15deg); }
+  .leaf-bg .l2 { top: 20%; right: -100px; transform: rotate(20deg) scaleX(-1); }
+  .leaf-bg .l3 { bottom: 10%; left: -60px; transform: rotate(5deg); }
+  .leaf-bg .l4 { bottom: -80px; right: -80px; transform: rotate(-25deg) scaleX(-1); }
+  .leaf-bg .l5 { top: 55%; left: 30%; transform: rotate(10deg); opacity: 0.03; }
+
+  /* ===== SCROLLING MARQUEE ===== */
+  .marquee-wrap {
+    background: linear-gradient(135deg, var(--maroon), #6B1414);
+    color: #FDE8C8;
+    padding: 9px 0;
+    overflow: hidden;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  .marquee-inner {
+    display: flex;
+    gap: 60px;
+    white-space: nowrap;
+    animation: marquee 30s linear infinite;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(253,248,242,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    box-shadow: 0 2px 20px rgba(201,146,42,0.08);
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .nav-logo-text { line-height: 1.1; }
+  .nav-logo-text .en { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--maroon); letter-spacing: 0.5px; }
+  .nav-logo-text .mr { font-family: 'Noto Sans Devanagari', sans-serif; font-size: 11px; color: var(--text-soft); font-weight: 400; }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a { text-decoration: none; font-size: 15px; color: var(--text-mid); transition: color 0.2s; font-weight: 400; }
+  .nav-links a:hover { color: var(--saffron); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 0.3px;
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(232,117,26,0.35); }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 40px;
+    overflow: hidden;
+  }
+  .hero-decor {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .hero-decor .rangoli {
+    position: absolute;
+    bottom: -60px; left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.06;
+    width: 600px; height: 600px;
+  }
+  .hero-decor .petal {
+    position: absolute;
+    border-radius: 50% 0;
+    animation: floatPetal 8s ease-in-out infinite;
+  }
+  @keyframes floatPetal {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold-pale);
+    border: 1px solid var(--border-strong);
+    border-radius: 30px;
+    padding: 6px 18px;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 28px;
+    animation: fadeUp 0.7s ease both;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--maroon);
+    margin-bottom: 12px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero-title em { font-style: italic; color: var(--saffron); }
+  .hero-subtitle-mr {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: clamp(20px, 3vw, 28px);
+    color: var(--gold);
+    margin-bottom: 18px;
+    font-weight: 400;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .hero-desc {
+    font-size: 20px;
+    color: var(--text-soft);
+    max-width: 520px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    font-weight: 300;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    color: white;
+    border: none;
+    padding: 16px 36px;
+    border-radius: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 0.3px;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(232,117,26,0.4); }
+  .btn-secondary {
+    background: white;
+    color: var(--maroon);
+    border: 1.5px solid var(--border-strong);
+    padding: 16px 36px;
+    border-radius: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-secondary:hover { background: var(--cream-2); border-color: var(--gold); transform: translateY(-2px); }
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+    margin-top: 64px;
+    animation: fadeUp 0.7s 0.5s ease both;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--saffron); line-height: 1; }
+  .hero-stat .label { font-size: 13px; color: var(--text-soft); margin-top: 4px; font-family: 'Noto Sans Devanagari', sans-serif; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ===== DIVIDER ===== */
+  .ornament-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 0;
+    position: relative; z-index: 1;
+  }
+  .ornament-divider .line { flex: 1; max-width: 200px; height: 1px; background: linear-gradient(to right, transparent, var(--border-strong)); }
+  .ornament-divider .line.rev { background: linear-gradient(to left, transparent, var(--border-strong)); }
+  .ornament-divider .icon { color: var(--gold); font-size: 22px; }
+
+  /* ===== SECTION TITLES ===== */
+  .section-header {
+    text-align: center;
+    margin-bottom: 48px;
+    position: relative; z-index: 1;
+  }
+  .section-tag {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 12px;
+    color: var(--saffron);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 700;
+    color: var(--maroon);
+    line-height: 1.15;
+  }
+  .section-title em { font-style: italic; color: var(--saffron); }
+  .section-subtitle {
+    font-size: 17px;
+    color: var(--text-soft);
+    margin-top: 12px;
+    font-weight: 300;
+    max-width: 460px;
+    margin-left: auto; margin-right: auto;
+    line-height: 1.6;
+  }
+  .title-deco {
+    width: 60px; height: 2px;
+    background: linear-gradient(to right, var(--gold), var(--saffron));
+    border-radius: 2px;
+    margin: 16px auto 0;
+  }
+
+  /* ===== CASTE TABS ===== */
+  .caste-section {
+    padding: 60px 40px 80px;
+    position: relative; z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .caste-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  .caste-tab {
+    padding: 10px 22px;
+    border-radius: 30px;
+    border: 1.5px solid var(--border-strong);
+    background: white;
+    color: var(--text-mid);
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-weight: 400;
+  }
+  .caste-tab:hover { border-color: var(--saffron); color: var(--saffron); background: var(--saffron-pale); }
+  .caste-tab.active {
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(232,117,26,0.3);
+  }
+  .caste-panel { display: none; }
+  .caste-panel.active { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ===== PROFILE CARDS ===== */
+  .profiles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .profile-card {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    position: relative;
+  }
+  .profile-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--gold-light);
+  }
+  .card-photo-wrap {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--saffron-pale), var(--gold-pale));
+  }
+  .card-photo-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .profile-card:hover .card-photo-wrap img { transform: scale(1.05); }
+  .card-photo-initials {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--saffron);
+    opacity: 0.5;
+  }
+  .card-badge {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--leaf-green);
+    font-weight: 500;
+    border: 1px solid rgba(74,103,65,0.2);
+  }
+  .card-body { padding: 18px 20px 20px; }
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--maroon);
+    margin-bottom: 4px;
+  }
+  .card-caste {
+    font-size: 12px;
+    color: var(--saffron);
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .card-details { display: flex; flex-direction: column; gap: 6px; }
+  .card-detail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-soft);
+  }
+  .card-detail .icon { font-size: 13px; width: 16px; }
+  .card-footer {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+  }
+  .card-btn {
+    flex: 1;
+    padding: 9px 0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Crimson Pro', serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .card-btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--border-strong);
+    color: var(--text-mid);
+  }
+  .card-btn-outline:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-pale); }
+  .card-btn-fill {
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    color: white;
+  }
+  .card-btn-fill:hover { box-shadow: 0 4px 15px rgba(232,117,26,0.3); transform: translateY(-1px); }
+
+  /* ===== UPLOAD SECTION ===== */
+  .upload-section {
+    background: linear-gradient(135deg, var(--cream-2), var(--gold-pale));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 40px;
+    position: relative; z-index: 1;
+  }
+  .upload-wrap {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .upload-form-card {
+    background: white;
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    padding: 48px;
+    box-shadow: var(--shadow);
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .form-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  .form-group { display: flex; flex-direction: column; gap: 7px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-mid);
+    letter-spacing: 0.3px;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+  .form-input, .form-select, .form-textarea {
+    padding: 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    color: var(--text-dark);
+    background: var(--cream);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,146,42,0.1);
+    background: white;
+  }
+  .form-textarea { resize: vertical; min-height: 100px; }
+  .photo-upload-zone {
+    border: 2px dashed var(--border-strong);
+    border-radius: 14px;
+    padding: 40px 20px;
+    text-align: center;
+    background: var(--saffron-pale);
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-upload-zone:hover { border-color: var(--saffron); background: rgba(232,117,26,0.06); }
+  .photo-upload-zone input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer;
+  }
+  .photo-upload-icon { font-size: 40px; margin-bottom: 10px; display: block; }
+  .photo-upload-text { font-family: 'Noto Sans Devanagari', sans-serif; font-size: 14px; color: var(--text-soft); }
+  .photo-upload-text strong { color: var(--saffron); display: block; font-size: 15px; margin-bottom: 4px; }
+  .photo-preview-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    min-height: 0;
+  }
+  .photo-thumb {
+    width: 70px; height: 70px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid var(--gold-light);
+    position: relative;
+  }
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 8px;
+    letter-spacing: 0.3px;
+  }
+  .form-submit:hover { box-shadow: 0 10px 30px rgba(232,117,26,0.4); transform: translateY(-2px); }
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 32px;
+    animation: fadeUp 0.5s ease;
+  }
+  .form-success .tick { font-size: 52px; margin-bottom: 14px; }
+  .form-success h3 { font-family: 'Playfair Display', serif; color: var(--maroon); font-size: 26px; margin-bottom: 8px; }
+  .form-success p { color: var(--text-soft); font-size: 16px; }
+
+  /* ===== HOW IT WORKS ===== */
+  .how-section {
+    padding: 80px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+  .how-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 32px;
+    margin-top: 48px;
+  }
+  .how-step {
+    text-align: center;
+    padding: 36px 24px;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    position: relative;
+    transition: all 0.3s;
+  }
+  .how-step:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--gold-light); }
+  .step-num {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, var(--saffron-pale), var(--gold-pale));
+    border: 2px solid var(--border-strong);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--saffron);
+    margin: 0 auto 20px;
+  }
+  .how-step h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--maroon);
+    margin-bottom: 10px;
+  }
+  .how-step p { font-size: 15px; color: var(--text-soft); line-height: 1.6; font-weight: 300; }
+
+  /* ===== TESTIMONIALS ===== */
+  .testimonials-section {
+    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
+    padding: 80px 40px;
+    position: relative; z-index: 1;
+  }
+  .testimonials-wrap { max-width: 1100px; margin: 0 auto; }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .testimonial-card {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    padding: 32px;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .testimonial-card:hover { box-shadow: var(--shadow); border-color: var(--gold-light); }
+  .quote-icon { font-size: 40px; color: var(--gold-light); line-height: 1; margin-bottom: 16px; font-family: Georgia, serif; }
+  .testimonial-text { font-size: 16px; color: var(--text-mid); line-height: 1.75; font-style: italic; margin-bottom: 20px; font-weight: 300; }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
+  .t-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600; font-size: 16px; color: white;
+    flex-shrink: 0;
+  }
+  .t-info .name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; color: var(--maroon); }
+  .t-info .place { font-size: 13px; color: var(--text-soft); font-family: 'Noto Sans Devanagari', sans-serif; }
+  .stars { color: var(--gold); font-size: 14px; margin-bottom: 14px; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: linear-gradient(135deg, var(--maroon), #5A1010);
+    color: rgba(253,232,200,0.9);
+    padding: 60px 40px 30px;
+    position: relative; z-index: 1;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+  .footer-brand .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: white;
+    margin-bottom: 8px;
+  }
+  .footer-brand .tagline {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 14px;
+    color: rgba(253,232,200,0.6);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    max-width: 260px;
+  }
+  .footer-col h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--gold-light);
+    margin-bottom: 16px;
+  }
+  .footer-col a {
+    display: block;
+    color: rgba(253,232,200,0.65);
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+    font-weight: 300;
+  }
+  .footer-col a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: rgba(253,232,200,0.4);
+  }
+  .footer-bottom .mr {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    color: rgba(253,232,200,0.3);
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(44,24,16,0.65);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white;
+    border-radius: 24px;
+    max-width: 580px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 40px;
+    position: relative;
+    animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes modalIn { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+  .modal-close {
+    position: absolute; top: 18px; right: 18px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-soft);
+    transition: all 0.2s;
+  }
+  .modal-close:hover { background: var(--saffron-pale); color: var(--saffron); }
+  .modal-photo-area {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+  }
+  .modal-photo {
+    width: 120px; height: 140px;
+    border-radius: 14px;
+    object-fit: cover;
+    background: var(--gold-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    color: var(--saffron);
+    opacity: 0.6;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .modal-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .modal-name { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--maroon); margin-bottom: 4px; }
+  .modal-caste-tag {
+    display: inline-block;
+    background: var(--saffron-pale);
+    color: var(--saffron);
+    border-radius: 20px;
+    padding: 3px 14px;
+    font-size: 12px;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .modal-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    background: var(--cream);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .modal-detail-item .key { font-size: 11px; font-weight: 600; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
+  .modal-detail-item .val { font-size: 16px; color: var(--text-dark); font-weight: 400; }
+  .modal-about { font-size: 15px; color: var(--text-mid); line-height: 1.7; font-weight: 300; margin-bottom: 24px; }
+  .modal-actions { display: flex; gap: 12px; }
+  .modal-actions button { flex: 1; padding: 13px; border-radius: 10px; font-size: 16px; font-family: 'Playfair Display', serif; font-weight: 600; cursor: pointer; transition: all 0.25s; border: none; }
+  .modal-interest { background: linear-gradient(135deg, var(--saffron), var(--gold)); color: white; }
+  .modal-interest:hover { box-shadow: 0 8px 24px rgba(232,117,26,0.35); }
+  .modal-save { background: white; border: 1.5px solid var(--border-strong) !important; color: var(--text-mid); }
+  .modal-save:hover { border-color: var(--gold) !important; color: var(--gold); }
+
+  /* ===== SEARCH BAR ===== */
+  .search-bar-wrap {
+    max-width: 680px;
+    margin: 0 auto 40px;
+    display: flex;
+    gap: 10px;
+    background: white;
+    border-radius: 50px;
+    padding: 8px 8px 8px 20px;
+    border: 1.5px solid var(--border-strong);
+    box-shadow: 0 4px 20px rgba(201,146,42,0.1);
+    position: relative; z-index: 1;
+  }
+  .search-bar-wrap input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    color: var(--text-dark);
+    background: transparent;
+  }
+  .search-bar-wrap input::placeholder { color: var(--text-soft); }
+  .search-btn {
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 10px 28px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    white-space: nowrap;
+  }
+  .search-btn:hover { box-shadow: 0 4px 16px rgba(232,117,26,0.3); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 60px 20px; }
+    .hero-stats { gap: 24px; }
+    .caste-section { padding: 40px 20px 60px; }
+    .upload-section { padding: 60px 20px; }
+    .upload-form-card { padding: 28px 20px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-grid.three { grid-template-columns: 1fr 1fr; }
+    .how-section { padding: 60px 20px; }
+    .testimonials-section { padding: 60px 20px; }
+    footer { padding: 40px 20px 24px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+    .modal { padding: 28px 20px; }
+    .modal-details-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--maroon);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 40px;
+    font-size: 15px;
+    font-family: 'Crimson Pro', serif;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 3000;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- Banana Leaf Background -->
+<div class="leaf-bg">
+  <!-- Large banana leaf SVG -->
+  <svg class="l1" width="500" height="700" viewBox="0 0 500 700" fill="none">
+    <path d="M250 20 C180 120 60 250 40 400 C20 550 100 650 250 680 C400 650 480 550 460 400 C440 250 320 120 250 20Z" fill="#4A6741"/>
+    <path d="M250 20 L250 680" stroke="#2d4428" stroke-width="6" fill="none"/>
+    <path d="M250 20 C180 120 60 250 40 400" stroke="#2d4428" stroke-width="2" fill="none" opacity="0.5"/>
+    <path d="M250 200 C310 210 390 240 430 280" stroke="#2d4428" stroke-width="2" fill="none" opacity="0.4"/>
+    <path d="M250 300 C310 310 390 340 450 360" stroke="#2d4428" stroke-width="2" fill="none" opacity="0.4"/>
+    <path d="M250 400 C310 410 380 430 430 440" stroke="#2d4428" stroke-width="2" fill="none" opacity="0.4"/>
+    <path d="M250 200 C190 210 110 240 70 280" stroke="#2d4428" stroke-width="2" fill="none" opacity="0.4"/>
+    <path d="M250 300 C190 310 110 340 50 360" stroke="#2d4428" stroke-width="2" fill="none" opacity="0.4"/>
+    <path d="M250 400 C190 410 120 430 70 440" stroke="#2d4428" stroke-width="2" fill="none" opacity="0.4"/>
+  </svg>
+  <svg class="l2" width="500" height="700" viewBox="0 0 500 700" fill="none">
+    <path d="M250 20 C180 120 60 250 40 400 C20 550 100 650 250 680 C400 650 480 550 460 400 C440 250 320 120 250 20Z" fill="#4A6741"/>
+    <path d="M250 20 L250 680" stroke="#2d4428" stroke-width="6" fill="none"/>
+    <path d="M250 200 C310 210 390 240 430 280" stroke="#2d4428" stroke-width="2" fill="none" opacity="0.5"/>
+    <path d="M250 350 C310 360 390 390 450 410" stroke="#2d4428" stroke-width="2" fill="none" opacity="0.5"/>
+    <path d="M250 200 C190 210 110 240 70 280" stroke="#2d4428" stroke-width="2" fill="none" opacity="0.5"/>
+    <path d="M250 350 C190 360 110 390 50 410" stroke="#2d4428" stroke-width="2" fill="none" opacity="0.5"/>
+  </svg>
+  <svg class="l3" width="400" height="580" viewBox="0 0 500 700" fill="none">
+    <path d="M250 20 C180 120 60 250 40 400 C20 550 100 650 250 680 C400 650 480 550 460 400 C440 250 320 120 250 20Z" fill="#4A6741"/>
+    <path d="M250 20 L250 680" stroke="#2d4428" stroke-width="6" fill="none"/>
+    <path d="M250 250 C320 260 400 290 440 330" stroke="#2d4428" stroke-width="2" fill="none" opacity="0.5"/>
+    <path d="M250 250 C180 260 100 290 60 330" stroke="#2d4428" stroke-width="2" fill="none" opacity="0.5"/>
+  </svg>
+  <svg class="l4" width="500" height="700" viewBox="0 0 500 700" fill="none">
+    <path d="M250 20 C180 120 60 250 40 400 C20 550 100 650 250 680 C400 650 480 550 460 400 C440 250 320 120 250 20Z" fill="#4A6741"/>
+    <path d="M250 20 L250 680" stroke="#2d4428" stroke-width="5" fill="none"/>
+  </svg>
+</div>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-inner" id="marqueeInner">
+    <span>🌸 विवाहबंधन — सर्वांसाठी आदर्श जोडीदार</span>
+    <span>✦ Brahmin · Maratha · CKP · Mahar · Koli · Dhangar · Mali · Bhandari</span>
+    <span>🌺 Maharashtra's Most Trusted Matrimony Service</span>
+    <span>🪷 नवीन बायोडेटा नोंदवा — विनामूल्य</span>
+    <span>✦ 50,000+ Verified Profiles · 12,000+ Successful Marriages</span>
+    <span>🌸 विवाहबंधन — सर्वांसाठी आदर्श जोडीदार</span>
+    <span>✦ Brahmin · Maratha · CKP · Mahar · Koli · Dhangar · Mali · Bhandari</span>
+    <span>🌺 Maharashtra's Most Trusted Matrimony Service</span>
+    <span>🪷 नवीन बायोडेटा नोंदवा — विनामूल्य</span>
+    <span>✦ 50,000+ Verified Profiles · 12,000+ Successful Marriages</span>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-icon">🪷</div>
+    <div class="nav-logo-text">
+      <div class="en">VivahBandhan</div>
+      <div class="mr">विवाहबंधन</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#profiles">Profiles</a>
+    <a href="#upload">Upload Biodata</a>
+    <a href="#how">How It Works</a>
+    <a href="#testimonials">Success Stories</a>
+  </div>
+  <button class="nav-cta" onclick="scrollToSection('upload')">Post Biodata Free</button>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-decor">
+    <div class="petal" style="width:18px;height:18px;background:#F5A055;top:15%;left:8%;animation-delay:0s;opacity:0.4;"></div>
+    <div class="petal" style="width:12px;height:12px;background:#C9922A;top:25%;right:12%;animation-delay:2s;opacity:0.35;"></div>
+    <div class="petal" style="width:22px;height:22px;background:#E8B84B;top:65%;left:5%;animation-delay:4s;opacity:0.3;"></div>
+    <div class="petal" style="width:14px;height:14px;background:#F5A055;top:70%;right:8%;animation-delay:1s;opacity:0.4;"></div>
+    <div class="petal" style="width:10px;height:10px;background:#C9922A;top:40%;left:3%;animation-delay:3s;opacity:0.3;"></div>
+    <div class="petal" style="width:16px;height:16px;background:#E8B84B;top:50%;right:4%;animation-delay:5s;opacity:0.35;"></div>
+  </div>
+  <div>
+    <div class="hero-badge">🪷 &nbsp;Trusted by 50,000+ Maharashtra Families</div>
+    <h1 class="hero-title">Find Your <em>Perfect</em><br>Life Partner</h1>
+    <div class="hero-subtitle-mr">जीवनसाथी शोधा — आपल्या जातीत, आपल्या मनात</div>
+    <p class="hero-desc">Maharashtra's most trusted matrimony service, connecting hearts across every community with love, dignity, and tradition.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="scrollToSection('profiles')">Browse Profiles</button>
+      <button class="btn-secondary" onclick="scrollToSection('upload')">Post Your Biodata</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">50K+</div><div class="label">नोंदणीकृत सदस्य</div></div>
+      <div class="hero-stat"><div class="num">12K+</div><div class="label">यशस्वी विवाह</div></div>
+      <div class="hero-stat"><div class="num">35+</div><div class="label">जाती / समुदाय</div></div>
+      <div class="hero-stat"><div class="num">15+</div><div class="label">वर्षांचा अनुभव</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="ornament-divider">
+  <div class="line"></div>
+  <div class="icon">🌸</div>
+  <div class="line rev"></div>
+</div>
+
+<!-- Profiles Section -->
+<section class="caste-section" id="profiles">
+  <div class="section-header">
+    <div class="section-tag">जात-निहाय विभाग</div>
+    <h2 class="section-title">Browse by <em>Community</em></h2>
+    <p class="section-subtitle">Explore profiles from your community — each section carefully curated for your search.</p>
+    <div class="title-deco"></div>
+  </div>
+
+  <div class="search-bar-wrap">
+    <input type="text" placeholder="Search by name, city, profession…" id="searchInput" oninput="filterCards()">
+    <button class="search-btn">🔍 Search</button>
+  </div>
+
+  <div class="caste-tabs">
+    <button class="caste-tab active" onclick="showCaste('all', this)">All 🌸</button>
+    <button class="caste-tab" onclick="showCaste('brahmin', this)">ब्राह्मण</button>
+    <button class="caste-tab" onclick="showCaste('maratha', this)">मराठा</button>
+    <button class="caste-tab" onclick="showCaste('ckp', this)">CKP</button>
+    <button class="caste-tab" onclick="showCaste('mali', this)">माळी</button>
+    <button class="caste-tab" onclick="showCaste('koli', this)">कोळी</button>
+    <button class="caste-tab" onclick="showCaste('dhangar', this)">धनगर</button>
+    <button class="caste-tab" onclick="showCaste('bhandari', this)">भंडारी</button>
+    <button class="caste-tab" onclick="showCaste('mahar', this)">महार</button>
+    <button class="caste-tab" onclick="showCaste('other', this)">इतर</button>
+  </div>
+
+  <div id="profiles-container">
+    <div class="caste-panel active" id="panel-all">
+      <div class="profiles-grid" id="grid-all"></div>
+    </div>
+    <div class="caste-panel" id="panel-brahmin">
+      <div class="profiles-grid" id="grid-brahmin"></div>
+    </div>
+    <div class="caste-panel" id="panel-maratha">
+      <div class="profiles-grid" id="grid-maratha"></div>
+    </div>
+    <div class="caste-panel" id="panel-ckp">
+      <div class="profiles-grid" id="grid-ckp"></div>
+    </div>
+    <div class="caste-panel" id="panel-mali">
+      <div class="profiles-grid" id="grid-mali"></div>
+    </div>
+    <div class="caste-panel" id="panel-koli">
+      <div class="profiles-grid" id="grid-koli"></div>
+    </div>
+    <div class="caste-panel" id="panel-dhangar">
+      <div class="profiles-grid" id="grid-dhangar"></div>
+    </div>
+    <div class="caste-panel" id="panel-bhandari">
+      <div class="profiles-grid" id="grid-bhandari"></div>
+    </div>
+    <div class="caste-panel" id="panel-mahar">
+      <div class="profiles-grid" id="grid-mahar"></div>
+    </div>
+    <div class="caste-panel" id="panel-other">
+      <div class="profiles-grid" id="grid-other"></div>
+    </div>
+  </div>
+</section>
+
+<div class="ornament-divider">
+  <div class="line"></div>
+  <div class="icon">🪷</div>
+  <div class="line rev"></div>
+</div>
+
+<!-- Upload / Register Section -->
+<section class="upload-section" id="upload">
+  <div class="upload-wrap">
+    <div class="section-header">
+      <div class="section-tag">बायोडेटा नोंदणी</div>
+      <h2 class="section-title">Post Your <em>Biodata</em></h2>
+      <p class="section-subtitle">Create your profile for free and let families discover you across Maharashtra.</p>
+      <div class="title-deco"></div>
+    </div>
+    <div class="upload-form-card">
+      <div id="biodata-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">पूर्ण नाव (Full Name) *</label>
+            <input type="text" class="form-input" id="f-name" placeholder="e.g. Aarav Kulkarni">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Gender / लिंग *</label>
+            <select class="form-select" id="f-gender">
+              <option value="">Select</option>
+              <option>Male / वर</option>
+              <option>Female / वधू</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid three">
+          <div class="form-group">
+            <label class="form-label">वय (Age) *</label>
+            <input type="number" class="form-input" id="f-age" placeholder="25" min="18" max="60">
+          </div>
+          <div class="form-group">
+            <label class="form-label">उंची (Height)</label>
+            <input type="text" class="form-input" id="f-height" placeholder="5'6&quot;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">जात (Caste) *</label>
+            <select class="form-select" id="f-caste">
+              <option value="">Select Caste</option>
+              <option value="brahmin">ब्राह्मण (Brahmin)</option>
+              <option value="maratha">मराठा (Maratha)</option>
+              <option value="ckp">CKP</option>
+              <option value="mali">माळी (Mali)</option>
+              <option value="koli">कोळी (Koli)</option>
+              <option value="dhangar">धनगर (Dhangar)</option>
+              <option value="bhandari">भंडारी (Bhandari)</option>
+              <option value="mahar">महार (Mahar)</option>
+              <option value="other">इतर (Other)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">शिक्षण (Education) *</label>
+            <input type="text" class="form-input" id="f-edu" placeholder="e.g. B.Tech, MBA">
+          </div>
+          <div class="form-group">
+            <label class="form-label">व्यवसाय (Profession) *</label>
+            <input type="text" class="form-input" id="f-prof" placeholder="e.g. Software Engineer">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">शहर (City) *</label>
+            <input type="text" class="form-input" id="f-city" placeholder="e.g. Pune, Mumbai">
+          </div>
+          <div class="form-group">
+            <label class="form-label">वार्षिक उत्पन्न (Annual Income)</label>
+            <select class="form-select" id="f-income">
+              <option value="">Select</option>
+              <option>Under ₹3 Lakh</option>
+              <option>₹3–6 Lakh</option>
+              <option>₹6–10 Lakh</option>
+              <option>₹10–20 Lakh</option>
+              <option>₹20 Lakh+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">नक्षत्र (Nakshatra)</label>
+            <input type="text" class="form-input" id="f-nakshatra" placeholder="e.g. Rohini, Ashwini">
+          </div>
+          <div class="form-group">
+            <label class="form-label">गोत्र (Gotra)</label>
+            <input type="text" class="form-input" id="f-gotra" placeholder="e.g. Kashyap">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">स्वतःबद्दल (About Yourself)</label>
+            <textarea class="form-textarea" id="f-about" placeholder="Write a brief description about yourself, family, and expectations..."></textarea>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:20px;">
+          <label class="form-label">फोटो अपलोड करा (Upload Photo)</label>
+          <div class="photo-upload-zone">
+            <input type="file" accept="image/*" multiple id="photoInput" onchange="previewPhotos(event)">
+            <span class="photo-upload-icon">📸</span>
+            <div class="photo-upload-text">
+              <strong>Click to upload photos</strong>
+              JPG, PNG — up to 5 photos (max 5MB each)
+            </div>
+            <div class="photo-preview-row" id="photoPreview"></div>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">संपर्क क्रमांक (Mobile) *</label>
+            <input type="tel" class="form-input" id="f-mobile" placeholder="+91 98765 43210">
+          </div>
+          <div class="form-group">
+            <label class="form-label">ई-मेल (Email)</label>
+            <input type="email" class="form-input" id="f-email" placeholder="example@email.com">
+          </div>
+        </div>
+        <button class="form-submit" onclick="submitBiodata()">🪷 Submit Biodata — विनामूल्य नोंदणी</button>
+      </div>
+      <div class="form-success" id="form-success">
+        <div class="tick">🎊</div>
+        <h3>बायोडेटा यशस्वीरीत्या नोंदला गेला!</h3>
+        <p>Your biodata has been submitted successfully. Our team will verify and publish it within 24 hours. We wish you the very best! 🌸</p>
+        <br>
+        <button class="btn-primary" onclick="resetForm()" style="margin-top:8px;">Submit Another</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-section" id="how">
+  <div class="section-header">
+    <div class="section-tag">प्रक्रिया</div>
+    <h2 class="section-title">How It <em>Works</em></h2>
+    <p class="section-subtitle">Simple, trusted, and dignified — your journey to finding the right partner.</p>
+    <div class="title-deco"></div>
+  </div>
+  <div class="how-steps">
+    <div class="how-step">
+      <div class="step-num">1</div>
+      <h4>Create Your Profile</h4>
+      <p>Fill in your details, upload photos and biodata. Registration is completely free.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">2</div>
+      <h4>Browse & Search</h4>
+      <p>Filter profiles by caste, age, city, education and find your ideal match easily.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">3</div>
+      <h4>Send Interest</h4>
+      <p>Express interest in profiles you like. Families will be notified of your request.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">4</div>
+      <h4>Connect & Meet</h4>
+      <p>Exchange contact details, talk, and arrange a meeting with families to proceed forward.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials-section" id="testimonials">
+  <div class="testimonials-wrap">
+    <div class="section-header">
+      <div class="section-tag">यशोगाथा</div>
+      <h2 class="section-title">Happy <em>Couples</em></h2>
+      <p class="section-subtitle">Thousands of families found their perfect match through VivahBandhan.</p>
+      <div class="title-deco"></div>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <div class="quote-icon">"</div>
+        <p class="testimonial-text">VivahBandhan ने आम्हाला जोडलं. माझ्या आईने हे सांगितलं होतं की योग्य वेळी योग्य माणूस भेटतो — आणि तसंच झालं! We are happily married for 2 years now.</p>
+        <div class="testimonial-author">
+          <div class="t-avatar">PK</div>
+          <div class="t-info">
+            <div class="name">Priya & Ketan Kulkarni</div>
+            <div class="place">ब्राह्मण · Pune → Nashik</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <div class="quote-icon">"</div>
+        <p class="testimonial-text">The caste-wise categorization made it so easy for our family to search. We found Snehal's profile in the Maratha section and everything fell into place naturally. Highly recommended!</p>
+        <div class="testimonial-author">
+          <div class="t-avatar">SM</div>
+          <div class="t-info">
+            <div class="name">Snehal & Mahesh Patil</div>
+            <div class="place">मराठा · Kolhapur → Satara</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <div class="quote-icon">"</div>
+        <p class="testimonial-text">As a CKP family from Mumbai, we were looking for someone with good values and education. VivahBandhan's verified profiles gave us confidence. Our son is now happily married!</p>
+        <div class="testimonial-author">
+          <div class="t-avatar">RD</div>
+          <div class="t-info">
+            <div class="name">Rao & Damle Family</div>
+            <div class="place">CKP · Mumbai</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="name">VivahBandhan 🪷</div>
+        <div class="tagline">महाराष्ट्रातील सर्वात विश्वासार्ह विवाह सेवा — जोडतो मने, जपतो परंपरा.</div>
+        <div style="font-size:13px;color:rgba(253,232,200,0.5);">Maharashtra's most trusted matrimony platform since 2009. Connecting hearts with dignity and tradition.</div>
+      </div>
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <a href="#profiles">Browse Profiles</a>
+        <a href="#upload">Post Biodata</a>
+        <a href="#how">How It Works</a>
+        <a href="#testimonials">Success Stories</a>
+      </div>
+      <div class="footer-col">
+        <h5>Communities</h5>
+        <a href="#">ब्राह्मण (Brahmin)</a>
+        <a href="#">मराठा (Maratha)</a>
+        <a href="#">CKP</a>
+        <a href="#">माळी (Mali)</a>
+        <a href="#">धनगर (Dhangar)</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="#">📞 +91 98765 12345</a>
+        <a href="#">✉️ info@vivahbandhan.in</a>
+        <a href="#">📍 Pune, Maharashtra</a>
+        <a href="#">WhatsApp Support</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 VivahBandhan. All Rights Reserved.</span>
+      <span class="mr">प्रेम · विश्वास · परंपरा</span>
+      <span>Privacy Policy · Terms of Service</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal -->
+<div class="modal-overlay" id="profileModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-photo-area">
+      <div class="modal-photo" id="modal-photo-el"></div>
+      <div>
+        <div class="modal-name" id="modal-name"></div>
+        <div class="modal-caste-tag" id="modal-caste"></div>
+        <div style="font-size:15px;color:var(--text-soft);" id="modal-tagline"></div>
+      </div>
+    </div>
+    <div class="modal-details-grid" id="modal-details-grid"></div>
+    <p class="modal-about" id="modal-about"></p>
+    <div class="modal-actions">
+      <button class="modal-interest card-btn" onclick="sendInterest()">💌 Send Interest</button>
+      <button class="modal-save card-btn" onclick="showToast('Saved to your shortlist 🌸')">🔖 Save Profile</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ========== PROFILE DATA ==========
+const profiles = [
+  { id:1, name:"Aarav Kulkarni", caste:"brahmin", casteLabel:"ब्राह्मण", gender:"Male", age:28, height:"5'10\"", city:"Pune", edu:"M.Tech - IIT Bombay", prof:"Software Engineer", income:"₹18 LPA", nakshatra:"Rohini", gotra:"Kashyap", status:"Verified ✓", about:"I am a calm and family-oriented person who loves music and travel. From a traditional Deshastha Brahmin family in Pune. Looking for an educated, values-driven life partner.", initials:"AK" },
+  { id:2, name:"Priyanka Joshi", caste:"brahmin", casteLabel:"ब्राह्मण", gender:"Female", age:25, height:"5'5\"", city:"Nashik", edu:"MBBS - Pune University", prof:"Doctor (MBBS)", income:"₹12 LPA", nakshatra:"Ashwini", gotra:"Bharadwaj", status:"Verified ✓", about:"A sincere and hardworking doctor looking for a well-educated, caring life partner. Belong to a Koknastha Brahmin family. I love cooking, classical dance, and reading.", initials:"PJ" },
+  { id:3, name:"Rohan Deshmukh", caste:"maratha", casteLabel:"मराठा", gender:"Male", age:30, height:"5'11\"", city:"Aurangabad", edu:"MBA - Symbiosis", prof:"Business Owner", income:"₹25 LPA", nakshatra:"Swati", gotra:"—", status:"Verified ✓", about:"From an established Maratha family in Marathwada. Running a family agribusiness. Looking for an independent, educated woman who values family traditions.", initials:"RD" },
+  { id:4, name:"Sneha Patil", caste:"maratha", casteLabel:"मराठा", gender:"Female", age:24, height:"5'4\"", city:"Kolhapur", edu:"B.E. Civil Engineering", prof:"Civil Engineer", income:"₹7 LPA", nakshatra:"Mrigashira", gotra:"—", status:"Verified ✓", about:"Simple, traditional yet modern girl from Kolhapur. Love my family and my roots. Looking for a kind, ambitious and family-loving partner.", initials:"SP" },
+  { id:5, name:"Vikram Prabhu", caste:"ckp", casteLabel:"CKP", gender:"Male", age:29, height:"5'9\"", city:"Mumbai", edu:"CA", prof:"Chartered Accountant", income:"₹20 LPA", nakshatra:"Uttara Phalguni", gotra:"Shandilya", status:"Verified ✓", about:"A CKP professional from Dadar, Mumbai. Very family-oriented with a progressive mindset. Looking for a well-educated woman who balances tradition and modernity.", initials:"VP" },
+  { id:6, name:"Ananya Mahajan", caste:"ckp", casteLabel:"CKP", gender:"Female", age:26, height:"5'6\"", city:"Thane", edu:"B.Com LLB", prof:"Advocate", income:"₹10 LPA", nakshatra:"Bharani", gotra:"Vasishtha", status:"Verified ✓", about:"Legal professional from a respectable CKP family in Thane. Love art, literature, and social work. Looking for an ambitious and respectful life partner.", initials:"AM" },
+  { id:7, name:"Ganesh Mali", caste:"mali", casteLabel:"माळी", gender:"Male", age:27, height:"5'8\"", city:"Solapur", edu:"B.Sc Agriculture", prof:"Agriculture Officer", income:"₹8 LPA", nakshatra:"Punarvasu", gotra:"—", status:"Verified ✓", about:"A government agriculture officer, deeply rooted in our Mali community values. Looking for a simple, loving life partner from a good family.", initials:"GM" },
+  { id:8, name:"Kavita Shinde", caste:"mali", casteLabel:"माळी", gender:"Female", age:23, height:"5'3\"", city:"Ahmednagar", edu:"B.Ed", prof:"School Teacher", income:"₹5 LPA", nakshatra:"Hasta", gotra:"—", status:"Verified ✓", about:"A cheerful teacher who loves children and nature. From a respected Mali family in Ahmednagar. Looking for a responsible, loving and down-to-earth partner.", initials:"KS" },
+  { id:9, name:"Sandip Koli", caste:"koli", casteLabel:"कोळी", gender:"Male", age:31, height:"5'10\"", city:"Raigad", edu:"B.Com", prof:"Business", income:"₹10 LPA", nakshatra:"Chitra", gotra:"—", status:"Verified ✓", about:"From a traditional Koli fishing family, now running a successful export business. Looking for a mature, practical life partner.", initials:"SK" },
+  { id:10, name:"Meena Tare", caste:"dhangar", casteLabel:"धनगर", gender:"Female", age:25, height:"5'4\"", city:"Satara", edu:"B.Sc Nursing", prof:"Staff Nurse", income:"₹6 LPA", nakshatra:"Krittika", gotra:"—", status:"Verified ✓", about:"A dedicated nurse from a Dhangar family in Satara. Honest, caring and family-oriented. Looking for a stable, responsible life partner.", initials:"MT" },
+  { id:11, name:"Anil Bhandari", caste:"bhandari", casteLabel:"भंडारी", gender:"Male", age:28, height:"5'9\"", city:"Ratnagiri", edu:"B.E. Mechanical", prof:"Engineer - L&T", income:"₹12 LPA", nakshatra:"Revati", gotra:"—", status:"Verified ✓", about:"Engineer working with a top MNC. From a Bhandari family in Konkan. Love the sea, cooking and travelling. Looking for a cheerful, educated partner.", initials:"AB" },
+  { id:12, name:"Sunita Kamble", caste:"mahar", casteLabel:"महार", gender:"Female", age:26, height:"5'5\"", city:"Nagpur", edu:"MA Sociology", prof:"Social Worker - NGO", income:"₹5 LPA", nakshatra:"Visakha", gotra:"—", status:"Verified ✓", about:"A passionate social worker dedicated to community upliftment. From a progressive Mahar family in Nagpur. Looking for an educated, like-minded partner.", initials:"SK" },
+];
+
+const casteColors = {
+  brahmin: "#8B1A1A", maratha: "#1A5C8B", ckp: "#4A1A8B",
+  mali: "#1A8B4A", koli: "#8B5A1A", dhangar: "#6B4A8B",
+  bhandari: "#1A6B5C", mahar: "#5C6B1A", other: "#6B6B1A"
+};
+
+// ========== RENDER PROFILES ==========
+function renderProfiles() {
+  const grids = {
+    all: document.getElementById('grid-all'),
+    brahmin: document.getElementById('grid-brahmin'),
+    maratha: document.getElementById('grid-maratha'),
+    ckp: document.getElementById('grid-ckp'),
+    mali: document.getElementById('grid-mali'),
+    koli: document.getElementById('grid-koli'),
+    dhangar: document.getElementById('grid-dhangar'),
+    bhandari: document.getElementById('grid-bhandari'),
+    mahar: document.getElementById('grid-mahar'),
+    other: document.getElementById('grid-other'),
+  };
+  Object.values(grids).forEach(g => g.innerHTML = '');
+  profiles.forEach(p => {
+    const card = createCard(p);
+    grids.all.insertAdjacentHTML('beforeend', card);
+    if (grids[p.caste]) grids[p.caste].insertAdjacentHTML('beforeend', card);
+    else grids.other.insertAdjacentHTML('beforeend', card);
+  });
+}
+
+function createCard(p) {
+  const genderIcon = p.gender === 'Female' ? '👩' : '👨';
+  return `
+  <div class="profile-card" onclick="openModal(${p.id})">
+    <div class="card-photo-wrap">
+      <div class="card-photo-initials">${p.initials}</div>
+      <div class="card-badge">${p.status}</div>
+    </div>
+    <div class="card-body">
+      <div class="card-name">${p.name}</div>
+      <div class="card-caste">🏷️ ${p.casteLabel}</div>
+      <div class="card-details">
+        <div class="card-detail"><span class="icon">${genderIcon}</span>${p.gender}, ${p.age} yrs · ${p.height}</div>
+        <div class="card-detail"><span class="icon">🎓</span>${p.edu}</div>
+        <div class="card-detail"><span class="icon">💼</span>${p.prof}</div>
+        <div class="card-detail"><span class="icon">📍</span>${p.city}</div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="card-btn card-btn-outline" onclick="event.stopPropagation();showToast('Saved to shortlist 🌸')">🔖 Save</button>
+      <button class="card-btn card-btn-fill" onclick="event.stopPropagation();openModal(${p.id})">View Profile</button>
+    </div>
+  </div>`;
+}
+
+// ========== CASTE FILTER ==========
+let currentCaste = 'all';
+function showCaste(caste, el) {
+  currentCaste = caste;
+  document.querySelectorAll('.caste-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.caste-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + caste).classList.add('active');
+}
+
+function filterCards() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const panel = document.getElementById('panel-' + currentCaste);
+  panel.querySelectorAll('.profile-card').forEach(card => {
+    card.style.display = card.innerText.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+// ========== MODAL ==========
+function openModal(id) {
+  const p = profiles.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('modal-name').textContent = p.name;
+  document.getElementById('modal-caste').textContent = p.casteLabel;
+  document.getElementById('modal-tagline').textContent = `${p.gender} · ${p.age} yrs · ${p.city}`;
+  const photoEl = document.getElementById('modal-photo-el');
+  photoEl.innerHTML = p.initials;
+  document.getElementById('modal-details-grid').innerHTML = `
+    <div class="modal-detail-item"><div class="key">Education</div><div class="val">${p.edu}</div></div>
+    <div class="modal-detail-item"><div class="key">Profession</div><div class="val">${p.prof}</div></div>
+    <div class="modal-detail-item"><div class="key">Annual Income</div><div class="val">${p.income}</div></div>
+    <div class="modal-detail-item"><div class="key">Height</div><div class="val">${p.height}</div></div>
+    <div class="modal-detail-item"><div class="key">Nakshatra</div><div class="val">${p.nakshatra}</div></div>
+    <div class="modal-detail-item"><div class="key">Gotra</div><div class="val">${p.gotra || '—'}</div></div>
+  `;
+  document.getElementById('modal-about').textContent = p.about;
+  document.getElementById('profileModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('profileModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('profileModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+function sendInterest() { closeModal(); showToast('Interest sent successfully! 💌'); }
+
+// ========== PHOTO PREVIEW ==========
+function previewPhotos(e) {
+  const preview = document.getElementById('photoPreview');
+  preview.innerHTML = '';
+  const files = Array.from(e.target.files).slice(0, 5);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = document.createElement('img');
+      img.src = ev.target.result;
+      img.className = 'photo-thumb';
+      preview.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ========== FORM SUBMIT ==========
+function submitBiodata() {
+  const required = ['f-name','f-gender','f-age','f-caste','f-edu','f-prof','f-city','f-mobile'];
+  let valid = true;
+  required.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) {
+      el.style.borderColor = '#E24B4A';
+      el.addEventListener('input', () => el.style.borderColor = '', {once:true});
+      valid = false;
+    }
+  });
+  if (!valid) { showToast('Please fill all required fields ⚠️'); return; }
+
+  // Add to local profiles list
+  const caste = document.getElementById('f-caste').value;
+  const casteLabels = {brahmin:'ब्राह्मण',maratha:'मराठा',ckp:'CKP',mali:'माळी',koli:'कोळी',dhangar:'धनगर',bhandari:'भंडारी',mahar:'महार',other:'इतर'};
+  const newProfile = {
+    id: profiles.length + 1,
+    name: document.getElementById('f-name').value,
+    caste: caste,
+    casteLabel: casteLabels[caste] || 'इतर',
+    gender: document.getElementById('f-gender').value.split(' ')[0],
+    age: parseInt(document.getElementById('f-age').value),
+    height: document.getElementById('f-height').value || '—',
+    city: document.getElementById('f-city').value,
+    edu: document.getElementById('f-edu').value,
+    prof: document.getElementById('f-prof').value,
+    income: document.getElementById('f-income').value || '—',
+    nakshatra: document.getElementById('f-nakshatra').value || '—',
+    gotra: document.getElementById('f-gotra').value || '—',
+    status: 'New Profile',
+    about: document.getElementById('f-about').value || 'No description provided.',
+    initials: document.getElementById('f-name').value.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)
+  };
+  profiles.push(newProfile);
+  renderProfiles();
+
+  document.getElementById('biodata-form').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+
+function resetForm() {
+  document.getElementById('biodata-form').style.display = 'block';
+  document.getElementById('form-success').style.display = 'none';
+  document.getElementById('biodata-form').querySelectorAll('input,select,textarea').forEach(el => el.value = '');
+  document.getElementById('photoPreview').innerHTML = '';
+}
+
+// ========== TOAST ==========
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ========== SCROLL ==========
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// ========== INIT ==========
+renderProfiles();
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.how-step, .testimonial-card, .profile-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
